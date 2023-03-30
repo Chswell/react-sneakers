@@ -3,10 +3,10 @@ import Header from './components/Header'
 import Drawer from './components/Drawer'
 
 const arr =[
-  { title: "Мужские Кроссовки Nike Kyrie 7", price: 12999, imageUrl: "/img/sneakers/1.jpg"},
-  { title: "Мужские Кроссовки Nike Kyrie 8", price: 15999, imageUrl: "/img/sneakers/2.jpg"},
-  { title: "Мужские Кроссовки Nike Kyrie 9", price: 17999, imageUrl: "/img/sneakers/3.jpg"},
-  { title: "Мужские Кроссовки Nike Kyrie 10", price: 11999, imageUrl: "/img/sneakers/4.jpg"}
+  { id: 1, title: "Мужские Кроссовки Nike Kyrie 7", price: 12999, imageUrl: "/img/sneakers/1.jpg"},
+  { id: 2, title: "Мужские Кроссовки Nike Kyrie 8", price: 15999, imageUrl: "/img/sneakers/2.jpg"},
+  { id: 3, title: "Мужские Кроссовки Nike Kyrie 9", price: 17999, imageUrl: "/img/sneakers/3.jpg"},
+  { id: 4, title: "Мужские Кроссовки Nike Kyrie 10", price: 11999, imageUrl: "/img/sneakers/4.jpg"}
 ]
 
 function App() {
@@ -28,7 +28,11 @@ function App() {
           <div className="d-flex">
             {
               arr.map((obj) => (
-                <Card title={obj.title} price={obj.price} imageUrl={obj.imageUrl}/>
+                <Card 
+                  title={obj.title} 
+                  price={obj.price} 
+                  imageUrl={obj.imageUrl}
+                  onClick={() => console.log(obj.id)}  />
               ))
             }
           </div>
