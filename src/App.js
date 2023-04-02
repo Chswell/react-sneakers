@@ -1,21 +1,30 @@
 import Card from './components/Card'
 import Header from './components/Header'
 import Drawer from './components/Drawer'
-
-const arr =[
-  { id: 1, title: "Мужские Кроссовки Nike Kyrie 7", price: 12999, imageUrl: "/img/sneakers/1.jpg"},
-  { id: 2, title: "Мужские Кроссовки Nike Kyrie 8", price: 15999, imageUrl: "/img/sneakers/2.jpg"},
-  { id: 3, title: "Мужские Кроссовки Nike Kyrie 9", price: 17999, imageUrl: "/img/sneakers/3.jpg"},
-  { id: 4, title: "Мужские Кроссовки Nike Kyrie 10", price: 11999, imageUrl: "/img/sneakers/4.jpg"}
-]
+import React from 'react'
 
 function App() {
+  const [items, setItems] = React.useState([]);
+  const [cartOpened, setCartOpened] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('https://64299366ebb1476fcc4c4fbb.mockapi.io/items')
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+      })
+  }, []);
+
   return (
     <div className="App">
       <div className="wrapper clear">
         
-        <Drawer />
-        <Header />
+        {cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
+        <Header 
+          onClickCart={() => setCartOpened(true)}
+        />
         
         <div className="content p-40">
           <div className="d-flex align-center justify-between mb-40">
@@ -25,9 +34,9 @@ function App() {
               <input type="text" placeholder="Поиск..." />
             </div>
           </div>
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
             {
-              arr.map((obj) => (
+              items.map((obj) => (
                 <Card 
                   title={obj.title} 
                   price={obj.price} 
