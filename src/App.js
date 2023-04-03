@@ -5,6 +5,7 @@ import React from 'react'
 
 function App() {
   const [items, setItems] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
@@ -14,14 +15,18 @@ function App() {
       })
       .then((json) => {
         setItems(json);
-      })
+      });
   }, []);
+
+  const onAddToCart = (obj) => {
+    setCartItems(prev => [...prev, obj]);
+  };
 
   return (
     <div className="App">
       <div className="wrapper clear">
         
-        {cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
+        {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
         <Header 
           onClickCart={() => setCartOpened(true)}
         />
@@ -36,13 +41,14 @@ function App() {
           </div>
           <div className="d-flex flex-wrap">
             {
-              items.map((obj) => (
+              items.map((item, index) => (
                 <Card 
-                  title={obj.title} 
-                  price={obj.price} 
-                  imageUrl={obj.imageUrl}
-                  onClickFavorite={() => console.log(`Добавили в закладки - ${obj.title}`)}
-                  onClickPlus={() => console.log(`Нажали плюс - ${obj.title}`)}  />
+                  key={index}
+                  title={item.title} 
+                  price={item.price} 
+                  imageUrl={item.imageUrl}
+                  onClickFavorite={() => console.log(`Добавили в закладки - ${item.title}`)}
+                  onPlus={(obj) => onAddToCart(obj)}  />
               ))
             }
           </div>
