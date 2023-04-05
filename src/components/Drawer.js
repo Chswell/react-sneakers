@@ -1,4 +1,4 @@
-const Drawer = ({ onClose, items = [] }) => {
+const Drawer = ({ onClose, onRemove, items = [] }) => {
     return (
         <div className="overlay"> 
             <div className="drawer d-flex flex-column">
@@ -17,7 +17,7 @@ const Drawer = ({ onClose, items = [] }) => {
                                     <p className="mb-10">{obj.title}</p>
                                     <b>{obj.price}</b>
                                 </div>
-                                <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+                                <img onClick={() => onRemove(obj.id)} className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
                             </div>
                         ))
                     }

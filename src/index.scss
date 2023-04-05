@@ -42,10 +42,26 @@ body {
     }
 }
 
+.pageTitle {
+  max-height: 500px;
+  width: 500px;
+  white-space: pre-wrap;
+}
+
 .search-block {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
   padding: 0 15px;
+  position: relative;
+
+  .clear {
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+    top: 12px;
+    right: 15px;
+  }
 
   input {
     border: 0;
