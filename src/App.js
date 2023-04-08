@@ -3,33 +3,42 @@ import axios from 'axios'
 import Card from './components/Card'
 import Header from './components/Header'
 import Drawer from './components/Drawer'
+const API_URL = 'http://localhost:3001';
 
 
 function App() {
+  
+
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [favorites, setFavorites] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
-      axios.get('https://64299366ebb1476fcc4c4fbb.mockapi.io/items').then(res => {
+      axios.get(`${API_URL}/items`).then(res => {
         setItems(res.data)
       });
-      axios.get('https://64299366ebb1476fcc4c4fbb.mockapi.io/cart').then(res => {
+      axios.get(`${API_URL}/cart`).then(res => {
         setCartItems(res.data)
       });
   }, []);
 
   const onAddToCart = (obj) => {
-    axios.post('https://64299366ebb1476fcc4c4fbb.mockapi.io/cart', obj);
+    axios.post(`${API_URL}/cart`, obj);
     setCartItems(prev => [...prev, obj]);
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(`https://64299366ebb1476fcc4c4fbb.mockapi.io/cart/${id}`);
+    axios.delete(`${API_URL}/cart/${id}`);
     setCartItems(prev => prev.filter(item => item.id !== id));
     console.log(id);
   }
+
+  const onAddToFavorite = () => {
+    // axios.delete(`${API_URL}/cart/${id}`);
+    // setCartItems(prev => prev.filter(item => item.id !== id));
+  };
 
   const onChangeSearchInput = (event) => {
     setSearchValue(event.target.value);
@@ -64,14 +73,16 @@ function App() {
           </div>
           <div className="d-flex flex-wrap">
             {
-              items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((item) => (
+              items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => (
                 <Card 
-                  key={item.id}
+                  key={index}
+                  id={item.id}
                   title={item.title} 
                   price={item.price} 
                   imageUrl={item.imageUrl}
-                  onClickFavorite={() => console.log(`Добавили в закладки - ${item.title}`)}
-                  onPlus={(obj) => onAddToCart(obj)}  />
+                  onFavorite={onAddToFavorite}
+                  onPlus={(obj) => onAddToCart(obj)}
+                  onRemove={(id) => onRemoveItem(id)}  />
               ))
             }
           </div>
