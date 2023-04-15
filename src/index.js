@@ -12,3 +12,10 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+
+// Для сервера
+// npm install -g json-server
+// скрипт в packege.json 
+// "server": "json-server -w server/db.json -p 3001"
+

@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "Мужские Кроссовки Nike Kyrie 7",
+      "price": 12999,
+      "imageUrl": "/img/sneakers/1.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Мужские Кроссовки Nike Kyrie 8",
+      "price": 15999,
+      "imageUrl": "/img/sneakers/2.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Мужские Кроссовки Nike Kyrie 9",
+      "price": 17999,
+      "imageUrl": "/img/sneakers/3.jpg"
+    },
+    {
+      "id": 14,
+      "title": "Мужские Кроссовки Nike Kyrie 10",
+      "price": 5677,
+      "imageUrl": "/img/sneakers/4.jpg"
+    },
+    {
+      "id": 15,
+      "title": "Мужские Кроссовки Nike Kyrie 11",
+      "price": 75423,
+      "imageUrl": "/img/sneakers/1.jpg"
+    },
+    {
+      "id": 16,
+      "title": "Мужские Кроссовки Nike Kyrie 12",
+      "price": 8765,
+      "imageUrl": "/img/sneakers/2.jpg"
+    },
+    {
+      "id": 17,
+      "title": "Мужские Кроссовки Nike Kyrie 3",
+      "price": 12344,
+      "imageUrl": "/img/sneakers/3.jpg"
+    }
+  ],
+  "cart": [],
+  "favorite": []
+}
