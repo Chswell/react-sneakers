@@ -44,5 +44,12 @@
     }
   ],
   "cart": [],
-  "favorite": []
+  "favorites": [
+    {
+      "id": 12,
+      "title": "Мужские Кроссовки Nike Kyrie 8",
+      "imageUrl": "/img/sneakers/2.jpg",
+      "price": 15999
+    }
+  ]
 }

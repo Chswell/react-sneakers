@@ -1,8 +1,11 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 import axios from 'axios'
-import Card from './components/Card'
 import Header from './components/Header'
 import Drawer from './components/Drawer'
+import Home from './components/pages/Home'
+import Favorites from './components/pages/Favorites'
+
 const API_URL = 'http://localhost:3001';
 
 
@@ -22,6 +25,9 @@ function App() {
       axios.get(`${API_URL}/cart`).then(res => {
         setCartItems(res.data)
       });
+      axios.get(`${API_URL}/favorites`).then(res => {
+        setFavorites(res.data)
+      });
   }, []);
 
   const onAddToCart = (obj) => {
@@ -35,9 +41,14 @@ function App() {
     console.log(id);
   }
 
-  const onAddToFavorite = () => {
-    // axios.delete(`${API_URL}/cart/${id}`);
-    // setCartItems(prev => prev.filter(item => item.id !== id));
+  const onAddToFavorite = (obj) => {
+    if (favorites.find(obj => obj.id === obj.id)) {
+      axios.delete(`${API_URL}/favorites/${obj.id}`);
+      setFavorites(prev => prev.filter(item => item.id !== obj.id));
+    } else {
+      axios.post(`${API_URL}/favorites`, obj);
+      setFavorites(prev => [...prev, obj]);
+    }
   };
 
   const onChangeSearchInput = (event) => {
@@ -48,45 +59,35 @@ function App() {
     <div className="App">
       <div className="wrapper clear">
         
-        {cartOpened && <Drawer onRemove={onRemoveItem} items={cartItems} onClose={() => setCartOpened(false)} />}
+        {cartOpened && <Drawer onRemove={onRemoveItem} items={cartItems} onClickAway={() => setCartOpened(false)} onClose={() => setCartOpened(false)} />}
         <Header 
           onClickCart={() => setCartOpened(true)}
         />
-        
-        <div className="content p-40">
-          <div className="d-flex align-center justify-between mb-40">
-            <div className='pageTitle'>
-              <h1>
-                {searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}
-              </h1>
-            </div>
-            <div className="search-block d-flex">
-              <img src="/img/search.svg" alt="Search" />
-              {searchValue && 
-              <img 
-                onClick={() => { setSearchValue('')}} 
-                className="clear cu-p" 
-                src="/img/btn-remove.svg" 
-                alt="Clear" />}
-              <input maxLength="29" onChange={onChangeSearchInput} value={searchValue} type="text" placeholder="Поиск..." />
-            </div>
-          </div>
-          <div className="d-flex flex-wrap">
-            {
-              items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => (
-                <Card 
-                  key={index}
-                  id={item.id}
-                  title={item.title} 
-                  price={item.price} 
-                  imageUrl={item.imageUrl}
-                  onFavorite={onAddToFavorite}
-                  onPlus={(obj) => onAddToCart(obj)}
-                  onRemove={(id) => onRemoveItem(id)}  />
-              ))
-            }
-          </div>
-        </div>
+        <Routes>
+          <Route path="/" exact 
+            element = {
+              <Home
+                items = {items}
+                searchValue = {searchValue}
+                setSearchValue = {setSearchValue}
+                onChangeSearchInput = {onChangeSearchInput}
+                onAddToFavorite = {onAddToFavorite}
+                onAddToCart = {onAddToCart}
+                onRemoveItem = {onRemoveItem}
+              />
+            }>
+          </Route>
+          <Route path="favorites" 
+          element = {
+
+          <Favorites 
+            items = {favorites}
+            onAddToFavorite = {onAddToFavorite}
+          />
+          
+          }></Route>
+        </Routes>
+
       </div>
     </div>
   );
